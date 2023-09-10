@@ -8,6 +8,7 @@ import (
 	"github.com/pefish/go-commander"
 	go_config "github.com/pefish/go-config"
 	go_logger "github.com/pefish/go-logger"
+	go_shell "github.com/pefish/go-shell"
 	"strings"
 )
 
@@ -82,11 +83,30 @@ func (dc *DefaultCommand) Start(data *commander.StartData) error {
 		go_logger.Logger.InfoFRaw("error: --type [%s] is illegal.", global.GlobalConfig.Type)
 		return nil
 	}
-	err := templateInstance.Make(global.TemplateParams{
+	params := global.TemplateParams{
 		ProjectName: projectName,
 		RepoUrl:     global.GlobalConfig.Repo,
 		PackageName: fmt.Sprintf("%s/%s/%s", domain, username, projectName),
-	})
+	}
+	err := templateInstance.Make(params)
+	if err != nil {
+		return err
+	}
+
+	// shellHelper.execSync(`git init`)
+	//  shellHelper.execSync(`git remote add origin ${program.repo}`)
+	script := fmt.Sprintf(
+		`
+#!/bin/bash
+set -euxo pipefail
+cd %s
+git init
+git remote add origin %s
+`,
+		params.ProjectName,
+		params.RepoUrl,
+	)
+	err = go_shell.NewCmd(script).Run()
 	if err != nil {
 		return err
 	}
