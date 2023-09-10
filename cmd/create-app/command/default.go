@@ -19,21 +19,6 @@ func NewDefaultCommand() *DefaultCommand {
 }
 
 func (dc *DefaultCommand) DecorateFlagSet(flagSet *flag.FlagSet) error {
-	templateNames := make([]string, 0)
-	for name, _ := range global.Templates {
-		templateNames = append(templateNames, name)
-	}
-	flagSet.String("type", "", fmt.Sprintf("Required. The template type. Available: [%s]", strings.Join(templateNames, ",")))
-	flagSet.String("repo", "", "Required. The repo url of project.")
-	return nil
-}
-
-func (dc *DefaultCommand) Init(data *commander.StartData) error {
-	err := go_config.ConfigManagerInstance.Unmarshal(&global.GlobalConfig)
-	if err != nil {
-		return err
-	}
-
 	global.Templates = map[string]global.ITemplate{
 		"electron":       templates.ElectronTemplateInstance,
 		"go_app":         templates.GoAppTemplateInstance,
@@ -47,6 +32,21 @@ func (dc *DefaultCommand) Init(data *commander.StartData) error {
 		"solidity_dapp":  templates.SolidityDappTemplateInstance,
 		"ts_app":         templates.TsAppTemplateInstance,
 		"ts_lib":         templates.TsLibTemplateInstance,
+	}
+
+	templateNames := make([]string, 0)
+	for name, _ := range global.Templates {
+		templateNames = append(templateNames, name)
+	}
+	flagSet.String("type", "", fmt.Sprintf("Required. The template type. Available: [%s]", strings.Join(templateNames, ",")))
+	flagSet.String("repo", "", "Required. The repo url of project.")
+	return nil
+}
+
+func (dc *DefaultCommand) Init(data *commander.StartData) error {
+	err := go_config.ConfigManagerInstance.Unmarshal(&global.GlobalConfig)
+	if err != nil {
+		return err
 	}
 
 	return nil
