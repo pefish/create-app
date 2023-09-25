@@ -93,8 +93,6 @@ func (dc *DefaultCommand) Start(data *commander.StartData) error {
 		return err
 	}
 
-	// shellHelper.execSync(`git init`)
-	//  shellHelper.execSync(`git remote add origin ${program.repo}`)
 	script := fmt.Sprintf(
 		`
 #!/bin/bash

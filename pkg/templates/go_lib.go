@@ -32,7 +32,7 @@ cat go.mod | sed "s/create_golang_lib_template/%s/g" > temp && rm -rf go.mod && 
 		glt.Url(),
 		params.ProjectName,
 		params.ProjectName,
-		params.ProjectName,
+		params.PackageName,
 	)
 	err := go_shell.NewCmd(script).Run()
 	if err != nil {
