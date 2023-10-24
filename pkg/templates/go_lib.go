@@ -27,7 +27,8 @@ set -euxo pipefail
 git clone %s --single-branch -v -b main --depth 1 %s
 cd %s
 rm -rf .git
-cat go.mod | sed "s/create_golang_lib_template/%s/g" > temp && rm -rf go.mod && mv temp go.mod
+NAME=%s ./init.sh
+rm -rf ./init.sh
 `,
 		glt.Url(),
 		params.ProjectName,
