@@ -27,11 +27,13 @@ set -euxo pipefail
 git clone %s --single-branch -v -b main --depth 1 %s
 cd %s
 rm -rf .git
-NAME="%s" ./init.sh
+PACKAGE_NAME="%s" PROJECT_NAME="%s" NAME="%s" ./init.sh
 rm -rf ./init.sh
 `,
 		gwst.Url(),
 		params.ProjectName,
+		params.ProjectName,
+		params.PackageName,
 		params.ProjectName,
 		params.ProjectName,
 	)
