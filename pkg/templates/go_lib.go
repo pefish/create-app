@@ -27,7 +27,7 @@ set -euxo pipefail
 git clone %s --single-branch -v -b main --depth 1 %s
 cd %s
 rm -rf .git
-NAME=%s ./init.sh
+NAME="%s" ./init.sh
 rm -rf ./init.sh
 `,
 		glt.Url(),
