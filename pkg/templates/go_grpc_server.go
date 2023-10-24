@@ -27,16 +27,10 @@ set -euxo pipefail
 git clone %s --single-branch -v -b main --depth 1 %s
 cd %s
 rm -rf .git
-cat go.mod | sed "s/_template_/%s/g" > temp && rm -rf go.mod && mv temp go.mod
-cat main.go | sed "s/_template_/%s/g" > temp && rm -rf main.go && mv temp main.go
-cat client/main.go | sed "s/_template_/%s/g" > client/temp && rm -rf client/main.go && mv client/temp client/main.go
-cat service/helloworld/helloworld.go | sed "s/_template_/%s/g" > service/helloworld/temp && rm -rf service/helloworld/helloworld.go && mv service/helloworld/temp service/helloworld/helloworld.go
-cp config/sample.yaml config/local.yaml
+NAME="%s" ./init.sh
+rm -rf ./init.sh
 `,
 		ggst.Url(),
-		params.ProjectName,
-		params.ProjectName,
-		params.ProjectName,
 		params.ProjectName,
 		params.ProjectName,
 		params.ProjectName,

@@ -27,8 +27,8 @@ set -euxo pipefail
 git clone %s --single-branch -v -b main --depth 1 %s
 cd %s
 rm -rf .git
-cat go.mod | sed "s/_template_/%s/g" > temp && rm -rf go.mod && mv temp go.mod
-cp config/sample.yaml config/local.yaml
+NAME="%s" ./init.sh
+rm -rf ./init.sh
 `,
 		gwst.Url(),
 		params.ProjectName,
