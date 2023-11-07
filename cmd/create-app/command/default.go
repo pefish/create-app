@@ -3,13 +3,15 @@ package command
 import (
 	"flag"
 	"fmt"
+	"os"
+	"os/exec"
+	"strings"
+
 	"github.com/pefish/create-app/pkg/global"
 	"github.com/pefish/create-app/pkg/templates"
 	"github.com/pefish/go-commander"
 	go_config "github.com/pefish/go-config"
 	go_logger "github.com/pefish/go-logger"
-	go_shell "github.com/pefish/go-shell"
-	"strings"
 )
 
 type DefaultCommand struct {
@@ -104,7 +106,10 @@ git remote add origin %s
 		params.ProjectName,
 		params.RepoUrl,
 	)
-	err = go_shell.NewCmd(script).Run()
+	cmd := exec.Command("bash", "-c", script)
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	err = cmd.Run()
 	if err != nil {
 		return err
 	}

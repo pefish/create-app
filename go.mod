@@ -12,7 +12,6 @@ require (
 	github.com/BurntSushi/toml v0.3.1 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
 	github.com/pefish/go-reflect v0.2.2 // indirect
-	github.com/pefish/go-shell v0.0.4 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	go.uber.org/atomic v1.5.0 // indirect
 	go.uber.org/multierr v1.3.0 // indirect
