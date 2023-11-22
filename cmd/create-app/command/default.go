@@ -3,6 +3,7 @@ package command
 import (
 	"flag"
 	"fmt"
+	"github.com/c-bata/go-prompt"
 	"github.com/pefish/create-app/pkg/global"
 	"github.com/pefish/create-app/pkg/templates"
 	"github.com/pefish/go-commander"
@@ -39,8 +40,8 @@ func (dc *DefaultCommand) DecorateFlagSet(flagSet *flag.FlagSet) error {
 	for name, _ := range global.Templates {
 		templateNames = append(templateNames, name)
 	}
-	flagSet.String("type", "", fmt.Sprintf("Required. The template type. Available: [%s]", strings.Join(templateNames, ",")))
-	flagSet.String("repo", "", "Required. The repo url of project.")
+	flagSet.String("type", "", fmt.Sprintf("The template type. Available: [%s]", strings.Join(templateNames, ",")))
+	flagSet.String("repo", "", "The repo url of project.")
 	return nil
 }
 
@@ -59,12 +60,44 @@ func (dc *DefaultCommand) OnExited(data *commander.StartData) error {
 
 func (dc *DefaultCommand) Start(data *commander.StartData) error {
 	if global.GlobalConfig.Type == "" {
-		go_logger.Logger.InfoFRaw("error: required option '--type [string]' not specified.")
-		return nil
+		suggests := make([]prompt.Suggest, 0)
+		for typeName, _ := range global.Templates {
+			suggests = append(suggests, prompt.Suggest{
+				Text: typeName,
+			})
+		}
+		fmt.Println("Please select type.")
+		global.GlobalConfig.Type = prompt.New(
+			func(s string) {},
+			func(d prompt.Document) []prompt.Suggest {
+				return prompt.FilterHasPrefix(
+					suggests,
+					d.GetWordBeforeCursor(),
+					true,
+				)
+			}, prompt.OptionPrefix(">>> ")).
+			Input()
+		if global.GlobalConfig.Type == "" {
+			go_logger.Logger.InfoFRaw("error: required option '--type [string]' not specified.")
+			return nil
+		}
 	}
 	if global.GlobalConfig.Repo == "" {
-		go_logger.Logger.InfoFRaw("error: required option '--repo [string]' not specified.")
-		return nil
+		fmt.Println("Please input repo.")
+		global.GlobalConfig.Repo = prompt.New(
+			func(s string) {},
+			func(d prompt.Document) []prompt.Suggest {
+				return prompt.FilterHasPrefix(
+					nil,
+					d.GetWordBeforeCursor(),
+					true,
+				)
+			}, prompt.OptionPrefix(">>> ")).
+			Input()
+		if global.GlobalConfig.Repo == "" {
+			go_logger.Logger.InfoFRaw("error: required option '--repo [string]' not specified.")
+			return nil
+		}
 	}
 
 	atPos := strings.Index(global.GlobalConfig.Repo, "@")
