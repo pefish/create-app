@@ -2,8 +2,10 @@ package templates
 
 import (
 	"fmt"
+	"os"
+	"os/exec"
+
 	"github.com/pefish/create-app/pkg/global"
-	go_shell "github.com/pefish/go-shell"
 )
 
 type TsAppTemplate struct {
@@ -36,7 +38,10 @@ cp config/sample.yaml config/local.yaml
 		params.ProjectName,
 		params.ProjectName,
 	)
-	err := go_shell.NewCmd(script).Run()
+	cmd := exec.Command("bash", "-c", script)
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	err := cmd.Run()
 	if err != nil {
 		return err
 	}
