@@ -3,12 +3,12 @@ package command
 import (
 	"flag"
 	"fmt"
-	"github.com/c-bata/go-prompt"
 	"github.com/pefish/create-app/pkg/global"
 	"github.com/pefish/create-app/pkg/templates"
 	"github.com/pefish/go-commander"
 	go_config "github.com/pefish/go-config"
 	go_logger "github.com/pefish/go-logger"
+	go_prompt "github.com/pefish/go-prompt"
 	"os"
 	"os/exec"
 	"strings"
@@ -61,44 +61,44 @@ func (dc *DefaultCommand) OnExited(data *commander.StartData) error {
 
 func (dc *DefaultCommand) Start(data *commander.StartData) error {
 	if global.GlobalConfig.Type == "" {
-		suggests := make([]prompt.Suggest, 0)
+		options := make([]go_prompt.InputOption, 0)
 		for typeName, _ := range global.Templates {
-			suggests = append(suggests, prompt.Suggest{
+			o := go_prompt.InputOption{
 				Text: typeName,
-			})
+				IsDefault: func() bool {
+					return typeName == "go_app"
+				}(),
+			}
+
+			options = append(options, o)
 		}
-		fmt.Println("Please select type.")
-		global.GlobalConfig.Type = prompt.New(
-			func(s string) {},
-			func(d prompt.Document) []prompt.Suggest {
-				return prompt.FilterHasPrefix(
-					suggests,
-					d.GetWordBeforeCursor(),
-					true,
-				)
-			}, prompt.OptionPrefix(">>> ")).
-			Input()
-		if global.GlobalConfig.Type == "" {
+		type_, isExit := go_prompt.PromptInstance.Input(
+			"Please select type.",
+			options,
+		)
+		if isExit {
+			return nil
+		}
+		if type_ == "" {
 			go_logger.Logger.InfoFRaw("error: required option '--type [string]' not specified.")
 			return nil
 		}
+		global.GlobalConfig.Type = type_
 	}
 	if global.GlobalConfig.Repo == "" {
-		fmt.Println("Please input repo.")
-		global.GlobalConfig.Repo = prompt.New(
-			func(s string) {},
-			func(d prompt.Document) []prompt.Suggest {
-				return prompt.FilterHasPrefix(
-					nil,
-					d.GetWordBeforeCursor(),
-					true,
-				)
-			}, prompt.OptionPrefix(">>> ")).
-			Input()
-		if global.GlobalConfig.Repo == "" {
+		repo, isExit := go_prompt.PromptInstance.Input(
+			"Please select repo.",
+			nil,
+		)
+		if isExit {
+			return nil
+		}
+
+		if repo == "" {
 			go_logger.Logger.InfoFRaw("error: required option '--repo [string]' not specified.")
 			return nil
 		}
+		global.GlobalConfig.Repo = repo
 	}
 
 	atPos := strings.Index(global.GlobalConfig.Repo, "@")
