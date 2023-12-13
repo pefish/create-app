@@ -87,7 +87,7 @@ func (dc *DefaultCommand) Start(data *commander.StartData) error {
 	}
 	if global.GlobalConfig.Repo == "" {
 		repo, isExit := go_prompt.PromptInstance.Input(
-			"Please select repo.",
+			"Please input repo.",
 			nil,
 		)
 		if isExit {
