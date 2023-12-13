@@ -34,9 +34,9 @@ npm install
 cp config/sample.yaml config/local.yaml
 `,
 		tat.Url(),
-		params.ProjectName,
-		params.ProjectName,
-		params.ProjectName,
+		params.AppName,
+		params.AppName,
+		params.AppName,
 	)
 	cmd := exec.Command("bash", "-c", script)
 	cmd.Stdout = os.Stdout

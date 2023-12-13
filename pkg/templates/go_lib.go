@@ -29,14 +29,14 @@ set -euxo pipefail
 git clone %s --single-branch -v -b main --depth 1 %s
 cd %s
 rm -rf .git
-PACKAGE_NAME="%s" PROJECT_NAME="%s" NAME="%s" ./init.sh
+PACKAGE_NAME="%s" APP_NAME="%s" NAME="%s" ./init.sh
 rm -rf ./init.sh
 `,
 		glt.Url(),
-		params.ProjectName,
-		params.ProjectName,
+		params.AppName,
+		params.AppName,
 		params.PackageName,
-		params.ProjectName,
+		params.AppName,
 		params.PackageName,
 	)
 	cmd := exec.Command("bash", "-c", script)

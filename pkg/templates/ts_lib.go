@@ -33,9 +33,9 @@ cat package.json | sed "s/template_name/%s/g" > temp.json && rm -rf package.json
 npm install
 `,
 		tlt.Url(),
-		params.ProjectName,
-		params.ProjectName,
-		params.ProjectName,
+		params.AppName,
+		params.AppName,
+		params.AppName,
 	)
 	cmd := exec.Command("bash", "-c", script)
 	cmd.Stdout = os.Stdout

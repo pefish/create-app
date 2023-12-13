@@ -118,7 +118,7 @@ func (dc *DefaultCommand) Start(data *commander.StartData) error {
 		return nil
 	}
 	params := global.TemplateParams{
-		ProjectName: projectName,
+		AppName:     projectName,
 		RepoUrl:     global.GlobalConfig.Repo,
 		PackageName: fmt.Sprintf("%s/%s/%s", domain, username, projectName),
 	}
@@ -135,7 +135,7 @@ cd %s
 git init
 git remote add origin %s
 `,
-		params.ProjectName,
+		params.AppName,
 		params.RepoUrl,
 	)
 	cmd := exec.Command("bash", "-c", script)

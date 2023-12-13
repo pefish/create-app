@@ -33,9 +33,9 @@ cat Cargo.toml | sed "s/create-rust-lib-template/%s/g" > temp && rm -rf Cargo.to
 cargo update
 `,
 		rlt.Url(),
-		params.ProjectName,
-		params.ProjectName,
-		params.ProjectName,
+		params.AppName,
+		params.AppName,
+		params.AppName,
 	)
 	cmd := exec.Command("bash", "-c", script)
 	cmd.Stdout = os.Stdout

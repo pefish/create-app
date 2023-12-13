@@ -6,7 +6,7 @@ type Config struct {
 }
 
 type TemplateParams struct {
-	ProjectName string `json:"project_name"`
+	AppName     string `json:"app_name"`
 	PackageName string `json:"package_name"`
 	RepoUrl     string `json:"repo_url"`
 }

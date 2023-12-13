@@ -32,8 +32,8 @@ rm -rf .git
 npm install
 `,
 		sdt.Url(),
-		params.ProjectName,
-		params.ProjectName,
+		params.AppName,
+		params.AppName,
 	)
 	cmd := exec.Command("bash", "-c", script)
 	cmd.Stdout = os.Stdout
