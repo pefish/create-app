@@ -6,8 +6,9 @@ type Config struct {
 }
 
 type TemplateParams struct {
-	AppName     string `json:"app_name"`
 	PackageName string `json:"package_name"`
+	Username    string `json:"username"`
+	AppName     string `json:"app_name"`
 	RepoUrl     string `json:"repo_url"`
 }
 

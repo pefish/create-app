@@ -118,9 +118,10 @@ func (dc *DefaultCommand) Start(data *commander.StartData) error {
 		return nil
 	}
 	params := global.TemplateParams{
+		PackageName: fmt.Sprintf("%s/%s/%s", domain, username, projectName),
+		Username:    username,
 		AppName:     projectName,
 		RepoUrl:     global.GlobalConfig.Repo,
-		PackageName: fmt.Sprintf("%s/%s/%s", domain, username, projectName),
 	}
 	err := templateInstance.Make(params)
 	if err != nil {
