@@ -3,20 +3,20 @@ module github.com/pefish/create-app
 go 1.20
 
 require (
-	github.com/c-bata/go-prompt v0.2.6
 	github.com/pefish/go-commander v0.5.1
 	github.com/pefish/go-config v0.2.5
 	github.com/pefish/go-logger v0.4.16
+	github.com/pefish/go-prompt v0.0.5
 )
 
 require (
 	github.com/BurntSushi/toml v0.3.1 // indirect
+	github.com/c-bata/go-prompt v0.2.6 // indirect
 	github.com/mattn/go-colorable v0.1.7 // indirect
 	github.com/mattn/go-isatty v0.0.12 // indirect
 	github.com/mattn/go-runewidth v0.0.9 // indirect
 	github.com/mattn/go-tty v0.0.3 // indirect
 	github.com/mitchellh/mapstructure v1.5.0 // indirect
-	github.com/pefish/go-prompt v0.0.2 // indirect
 	github.com/pefish/go-reflect v0.2.2 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/pkg/term v1.2.0-beta.2 // indirect
