@@ -29,13 +29,15 @@ set -euxo pipefail
 git clone %s --single-branch -v -b main --depth 1 %s
 cd %s
 rm -rf .git
-cat package.json | sed "s/template_name/%s/g" > temp.json && rm -rf package.json && mv temp.json package.json
-npm install
+PACKAGE_NAME="%s" APP_NAME="%s" USERNAME="%s" ./init.sh
+rm -rf ./init.sh
 `,
 		tlt.Url(),
 		params.AppName,
 		params.AppName,
+		params.PackageName,
 		params.AppName,
+		params.Username,
 	)
 	cmd := exec.Command("bash", "-c", script)
 	cmd.Stdout = os.Stdout
