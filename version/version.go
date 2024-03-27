@@ -2,5 +2,5 @@ package version
 
 const (
 	AppName = "create-app"
-	Version = "v1.1.9"
+	Version = "v1.2.2"
 )

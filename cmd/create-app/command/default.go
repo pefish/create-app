@@ -3,15 +3,16 @@ package command
 import (
 	"flag"
 	"fmt"
+	"os"
+	"os/exec"
+	"strings"
+
 	"github.com/pefish/create-app/pkg/global"
 	"github.com/pefish/create-app/pkg/templates"
 	"github.com/pefish/go-commander"
 	go_config "github.com/pefish/go-config"
 	go_logger "github.com/pefish/go-logger"
 	go_prompt "github.com/pefish/go-prompt"
-	"os"
-	"os/exec"
-	"strings"
 )
 
 type DefaultCommand struct {
@@ -35,6 +36,7 @@ func (dc *DefaultCommand) DecorateFlagSet(flagSet *flag.FlagSet) error {
 		"solidity_dapp":  templates.SolidityDappTemplateInstance,
 		"ts_app":         templates.TsAppTemplateInstance,
 		"ts_lib":         templates.TsLibTemplateInstance,
+		"ts_chrome_ext":  templates.TsChromeExtTemplateInstance,
 	}
 
 	templateNames := make([]string, 0)
