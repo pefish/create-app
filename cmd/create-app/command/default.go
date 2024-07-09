@@ -37,6 +37,7 @@ func (dc *DefaultCommand) DecorateFlagSet(flagSet *flag.FlagSet) error {
 		"ts_app":         templates.TsAppTemplateInstance,
 		"ts_lib":         templates.TsLibTemplateInstance,
 		"ts_chrome_ext":  templates.TsChromeExtTemplateInstance,
+		"nuxt_app":       templates.NuxtAppTemplateInstance,
 	}
 
 	templateNames := make([]string, 0)
